@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Consulta somente atividades que se anunciam como aplicativos iniciáveis. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_lume_launcher"
+        android:label="Lume Launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.LumeLauncher">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="Lume Launcher">
+            <!-- Entrada quando o usuário escolhe este app como tela inicial. -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- Também deixa o Lume acessível pela lista normal de aplicativos. -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
