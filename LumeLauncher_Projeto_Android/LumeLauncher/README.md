@@ -16,10 +16,9 @@ Launcher Android independente, feito em Kotlin + Jetpack Compose. O projeto tem 
 
 ## Requisitos
 
-- Android Studio com suporte ao Android Gradle Plugin 8.11.1.
 - JDK 17.
-- Android SDK Platform 36 instalado pelo SDK Manager.
-- Conexão com a internet na primeira sincronização para baixar Gradle e dependências.
+- Android SDK Platform 36.
+- Conexão com a internet na primeira compilação para baixar Gradle e dependências.
 
 Versões fixadas no projeto:
 
@@ -33,22 +32,55 @@ Versões fixadas no projeto:
 | compileSdk / targetSdk | 36 / 36 |
 | minSdk | 26 (Android 8.0) |
 
-O conjunto Kotlin/Gradle/AGP foi escolhido conforme a tabela de compatibilidade oficial do Kotlin. O Compose BOM segue a configuração oficial atual documentada pelo Android Developers.
+## Compilar pelo GitHub Codespaces
+
+O projeto está na pasta `LumeLauncher_Projeto_Android/LumeLauncher`, que contém o arquivo `settings.gradle.kts`.
+
+1. Abra o repositório no GitHub.
+2. Clique em **Code → Codespaces → Create codespace on main**.
+3. Aguarde o VS Code web abrir.
+4. Abra o terminal e execute:
+
+```bash
+cd LumeLauncher_Projeto_Android/LumeLauncher
+java -version
+bash ./gradlew assembleDebug
+```
+
+O ambiente precisa ter JDK 17 e Android SDK Platform 36. O script `gradlew` deste repositório baixa a distribuição oficial Gradle 8.13 para o cache do usuário; não é necessário ter Android Studio. O primeiro build também baixa os plugins e bibliotecas do projeto.
+
+APK de depuração esperado:
+
+`app/build/outputs/apk/debug/app-debug.apk`
+
+## Compilação automática pelo GitHub Actions
+
+O workflow **Build Android APK** está em:
+
+`.github/workflows/build-android.yml`
+
+Ele executa automaticamente em cada push para a branch `main` e também pode ser iniciado manualmente:
+
+1. Abra a aba **Actions** do repositório.
+2. Selecione **Build Android APK**.
+3. Clique em **Run workflow** e escolha a branch `main`.
+4. Abra a execução e aguarde o job **Compile Lume Launcher** terminar.
+5. Na seção **Artifacts**, baixe `lume-launcher-debug-apk`.
+
+O artefato fica disponível por 14 dias. A compilação ainda precisa ser confirmada pela execução do workflow; a existência do arquivo YAML, por si só, não comprova que o APK foi gerado.
 
 ## Abrir no Android Studio
 
-1. Extraia o ZIP.
-2. No Android Studio, escolha **Open** e selecione a pasta `LumeLauncher` (a que contém `settings.gradle.kts`).
-3. Aguarde a sincronização do Gradle. Na primeira vez, o script `gradlew` baixa a distribuição oficial Gradle 8.13 para o cache local.
-4. Se o Android Studio pedir, instale **Android SDK Platform 36** pelo SDK Manager.
+1. Baixe ou clone o repositório.
+2. Abra a pasta `LumeLauncher_Projeto_Android/LumeLauncher` (a que contém `settings.gradle.kts`).
+3. Aguarde a sincronização do Gradle.
+4. Se necessário, instale **Android SDK Platform 36**.
 5. Execute em um aparelho ou emulador com Android 8.0 ou superior.
 
 Também é possível compilar pelo terminal:
 
 - Windows: `gradlew.bat assembleDebug`
-- macOS/Linux: `./gradlew assembleDebug`
-
-APK de depuração esperado: `app/build/outputs/apk/debug/app-debug.apk`.
+- macOS/Linux: `bash ./gradlew assembleDebug`
 
 ## Escolher como tela inicial
 
@@ -57,7 +89,7 @@ APK de depuração esperado: `app/build/outputs/apk/debug/app-debug.apk`.
 3. Escolha **Abrir configurações**.
 4. Nas configurações de aplicativos padrão do Android, selecione **Lume Launcher** como aplicativo de início/tela inicial.
 
-O caminho exato dos menus pode variar conforme o fabricante do aparelho. Também é possível escolher o launcher ao pressionar o botão Início, dependendo da versão do Android.
+O caminho exato dos menus pode variar conforme o fabricante do aparelho.
 
 ## Estrutura do projeto
 
@@ -97,7 +129,7 @@ O manifesto declara um filtro `<queries>` para atividades `MAIN` + `LAUNCHER`, e
 - Ainda não hospeda widgets Android reais na área de trabalho.
 - Ainda não tem páginas múltiplas, pastas, gestos configuráveis, pacotes de ícones ou backup/exportação.
 - A grade apresenta atividades de inicialização disponibilizadas pelo Android para o perfil atual.
-- A compilação e a instalação precisam ser verificadas no Android Studio com SDK e dependências baixados; este ambiente de geração não possui Android SDK/Gradle instalado para executar o build aqui.
+- A compilação e a instalação precisam ser verificadas em um ambiente com JDK 17, Android SDK 36 e acesso à internet.
 
 ## Próximas etapas naturais
 
